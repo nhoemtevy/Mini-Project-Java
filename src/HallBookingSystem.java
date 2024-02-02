@@ -231,7 +231,6 @@ public class HallBookingSystem {
                             evenings[i][j] = "AV";
                         }
                     }
-                    //reset booking history
                     bookingIDs = new String[0];
                     bookingSessions = new int[0];
                     bookingSeats = new String[0][0];
@@ -246,14 +245,11 @@ public class HallBookingSystem {
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                     String formattedDate = LocalDate.now().format(formatter);
                     System.out.println("=======================|History Booking|=================================");
-                    System.out.println("Session: ");
-                    System.out.println("ID: ");
-                    System.out.println("Seat: ");
-                    System.out.println("Date: ");
+                    System.out.println("Session\t\t\t\tID\t\t\t\tSeat\t\t\t\tDate");
                     if (bookingCount > 0) {
                         String session = bookingSessions[0] == 1 ? "morning" : bookingSessions[0] == 2 ? "afternoon" : "evening";
                         String seats = Arrays.toString(bookingSeats[0]).replaceAll("[\\[\\]]", "").replace(", ", ",");
-                        System.out.println(String.format("%-10s%-10s%-15s%s"));
+                        System.out.println(String.format("%-10s%-10s%-15s%s", session,bookingIDs[0] , seats, formattedDate));
                         System.out.println("========================================================");
                     }
                 } else {
