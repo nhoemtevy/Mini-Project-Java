@@ -211,7 +211,7 @@ public class HallBookingSystem {
                 System.out.println("======================================");
                 System.out.println("#Showtime of Booking Hall :");
                 System.out.println("# 1. Morning (10:00AM - 12:30PM)");
-                System.out.println("# 2. Afternoon (3:00PM - 5:30PM");
+                System.out.println("# 2. Afternoon (3:00PM - 5:30PM)");
                 System.out.println("# 3. Evening (7:00PM - 9:30PM)");
                 System.out.println("======================================");
             }
