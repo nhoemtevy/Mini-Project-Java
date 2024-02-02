@@ -51,7 +51,6 @@ public class HallBookingSystem {
                     } else {
                         System.out.println("Invalid input. Please enter a number.");
                     }
-
                 } while (!isRowValid || !isColsValid);
                 do {
                     System.out.println("=================[[APPLICATION MENU]]================");
@@ -95,6 +94,7 @@ public class HallBookingSystem {
                     pressToContinue();
                 } while (true);
             }
+            //Hall Booking System
             public static void Booking(String[][] mornings, String[][] afternoons, String[][] evenings) {
                 Scanner input = new Scanner(System.in);
                 System.out.println("=========================================");
@@ -103,19 +103,20 @@ public class HallBookingSystem {
                 System.out.println("1. Morning");
                 System.out.println("2. Afternoon");
                 System.out.println("3. Evening");
-                int session=0;
+                int session = 0;
                 boolean validInput;
                 do {
                     System.out.print("Please Choose option from 1-3:");
                     String sessionStr = input.nextLine();
-                    if (sessionStr.matches("^[1-3]$")){
+                    if (sessionStr.matches("^[1-3]$")) {
                         session = Integer.parseInt(sessionStr);
                         validInput = true;
-                    }else {
+                    } else {
                         System.out.println("Please input the valid option from 1-3!");
                         validInput = false;
                     }
-                }while (!validInput);
+                } while (!validInput);
+
                 String[][] selectedSession;
                 switch (session) {
                     case 1:
@@ -131,17 +132,18 @@ public class HallBookingSystem {
                         System.out.println("Invalid session choice.");
                         return;
                 }
+
                 System.out.println("Available seats in the " + (session == 1 ? "morning" : session == 2 ? "afternoon" : "evening") + " session:");
                 char seatRow = 65;
                 for (int i = 0; i < selectedSession.length; i++) {
                     for (int j = 0; j < selectedSession[i].length; j++) {
-                        System.out.print("|" + (char) (seatRow + i) +"-" + (j+1) + " ::" + selectedSession[i][j] + "| ");
+                        System.out.print("|" + (char) (seatRow + i) + "-" + (j + 1) + " ::" + selectedSession[i][j] + "| ");
                     }
                     System.out.println();
                 }
                 System.out.println("====================|Booking Instruction|================");
                 System.out.println("For single seat booking you can input A-1");
-                System.out.println("For multi seat booking you can input A-1,A-2");
+                System.out.println("For multi-seat booking you can input A-1,A-2");
                 System.out.println("==========================================================");
                 System.out.print("Enter the seat numbers: ");
                 String seatInput = input.next();
@@ -152,9 +154,9 @@ public class HallBookingSystem {
                 String confirmation = input.next();
                 if ("y".equalsIgnoreCase(confirmation)) {
                     for (String seatNumber : seatNumbers) {
-                        int seat = Integer.parseInt(seatNumber.trim().substring(2));
-                        int row = (seat - 1) / selectedSession[0].length;
-                        int col = (seat - 1) % selectedSession[0].length;
+                        char rowChar = seatNumber.trim().charAt(0);
+                        int row = rowChar - 'A'; // Convert row character to array index
+                        int col = Integer.parseInt(seatNumber.trim().substring(2)) - 1;
                         if (row >= 0 && row < selectedSession.length && col >= 0 && col < selectedSession[row].length) {
                             if (selectedSession[row][col].equals("AV")) {
                                 selectedSession[row][col] = "BO";
@@ -177,6 +179,7 @@ public class HallBookingSystem {
                     System.out.println("Booking cancelled.");
                 }
             }
+            //Hall for Checking System
             public static void HallChecking(String[][] mornings, String[][] afternoons, String[][] evenings){
                 char seat = 65;
                 System.out.println("Hall MORNING");
@@ -203,6 +206,7 @@ public class HallBookingSystem {
                     }
                 }
             }
+            //Hall for Showtime System
             public static void showTime(){
                 System.out.println("======================================");
                 System.out.println("#Showtime of Booking Hall :");
@@ -211,6 +215,7 @@ public class HallBookingSystem {
                 System.out.println("# 3. Evening (7:00PM - 9:30PM)");
                 System.out.println("======================================");
             }
+            //Hall for Rebooting System
             public static void rebootHall(String[][] mornings, String[][] afternoons, String[][] evenings) {
                 Scanner input = new Scanner(System.in);
                 System.out.print("Are you sure you want to reboot the hall? This will clear all current bookings. (y/n): ");
@@ -240,17 +245,20 @@ public class HallBookingSystem {
                     System.out.println("Reboot cancelled.");
                 }
             }
+            //Hall for Booking History
             public static void bookingHistory() {
-                if(bookingCount != 0) {
+                if (bookingCount > 0) {
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                     String formattedDate = LocalDate.now().format(formatter);
-                    System.out.println("=======================|History Booking|=================================");
-                    System.out.println("Session\t\t\t\tID\t\t\t\tSeat\t\t\t\tDate");
-                    if (bookingCount > 0) {
-                        String session = bookingSessions[0] == 1 ? "morning" : bookingSessions[0] == 2 ? "afternoon" : "evening";
-                        String seats = Arrays.toString(bookingSeats[0]).replaceAll("[\\[\\]]", "").replace(", ", ",");
-                        System.out.println(String.format("%-10s%-10s%-15s%s", session,bookingIDs[0] , seats, formattedDate));
-                        System.out.println("========================================================");
+                    System.out.println("=".repeat(30) +"|History Booking|" + "=".repeat(30));
+                    for (int i = 0; i < bookingCount; i++) {
+                        String session = bookingSessions[i] == 1 ? "morning" : bookingSessions[i] == 2 ? "afternoon" : "evening";
+                        String seats = Arrays.toString(bookingSeats[i]).replaceAll("[\\[\\]]", "").replace(", ", ",");
+                        System.out.println("Session: " + session);
+                        System.out.println("ID: " + bookingIDs[i]);
+                        System.out.println("Seat: " + seats);
+                        System.out.println("Date: " + formattedDate);
+                        System.out.println("=".repeat(25));
                     }
                 } else {
                     System.out.println("You don't have any booking yet!");
